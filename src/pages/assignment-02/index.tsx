@@ -5,6 +5,7 @@ import RootLayout from '@/layouts/root-layout'
 import { BreadcrumbItem, Breadcrumbs, Card, CardBody } from '@heroui/react'
 import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
+import useLoadingScreen from '@/hooks/useLoadingScreen'
 const ReactJson = dynamic(() => import('react-json-view'), {
   ssr: false
 })
@@ -12,12 +13,14 @@ const ReactJson = dynamic(() => import('react-json-view'), {
 type Props = {}
 
 const Assignment2 = (props: Props) => {
+  const loadingScreen = useLoadingScreen()
   const { data: userList } = useQuery<TResponseUser>({
     queryKey: ['user'],
     queryFn: () => dummyUserService.get()
   })
 
   const DepartmentList: DepartmentListType = useMemo(() => {
+    loadingScreen.start({ key: 'assignment-1' })
     if (!userList) return {}
 
     const result: { [department: string]: TDepartment & { maxAge: number; minAge: number } } = {}
@@ -48,15 +51,17 @@ const Assignment2 = (props: Props) => {
         result[department].minAge = Math.min(result[department].minAge, user.age)
       }
 
-      if (result[department].hair) {
-        const hairColor = user.hair?.color || 'Unknown'
-        result[department].hair[hairColor] = (result[department].hair[hairColor] ?? 0) + 1
+      if (!result[department].hair) {
+        result[department].hair = {}
       }
+
+      const hairColor = user.hair?.color || 'Unknown'
+      result[department].hair![hairColor] = (result[department].hair![hairColor] ?? 0) + 1
 
       if (result[department].addressUser) {
         const fullName = `${user.firstName}${user.lastName}`
         const postalCode = user.address?.postalCode ?? '-'
-        result[department].addressUser[fullName] = postalCode
+        result[department].addressUser![fullName] = postalCode
       }
     })
 
@@ -70,6 +75,7 @@ const Assignment2 = (props: Props) => {
       }
     })
 
+    loadingScreen.stop({ key: 'assignment-1' })
     return cleanedResult
   }, [userList])
 
