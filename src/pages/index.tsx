@@ -1,5 +1,6 @@
 import MainLayout from '@/layouts/main-layout'
-import { Button, Card, CardBody } from '@heroui/react'
+import RootLayout from '@/layouts/root-layout'
+import { BreadcrumbItem, Breadcrumbs, Button, Card, CardBody } from '@heroui/react'
 import { useRouter } from 'next/router'
 import { Fragment, ReactElement } from 'react'
 
@@ -10,7 +11,11 @@ const Home = (props: Props) => {
 
   return (
     <Fragment>
-      <h1 className='text-2xl font-bold text-primary'>แบบทดสอบ Seven Hunter</h1>
+      <Breadcrumbs>
+        <BreadcrumbItem>หน้าหลัก</BreadcrumbItem>
+      </Breadcrumbs>
+
+      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบ Seven Hunter</h1>
 
       <Card className='mt-5 p-2'>
         <CardBody>
@@ -18,24 +23,24 @@ const Home = (props: Props) => {
             <Button
               variant='ghost'
               color='default'
-              className='h-28'
+              className='min-h-36 px-10'
               onPress={() => {
                 router.push('/assignment-01')
               }}>
               <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold'>แบบทดสอบ 01</p>
+                <p className='text-xl font-semibold'>แบบทดสอบ 1</p>
                 <p className='text-xl'>Auto delete todo list</p>
               </div>
             </Button>
             <Button
               variant='ghost'
               color='default'
-              className='h-28'
+              className='min-h-36 px-10'
               onPress={() => {
                 router.push('/assignment-02')
               }}>
               <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold'>แบบทดสอบ 02</p>
+                <p className='text-xl font-semibold'>แบบทดสอบ 2</p>
                 <p className='text-xl'>ACreate data from API</p>
               </div>
             </Button>
@@ -52,7 +57,9 @@ Home.auth = false
 Home.getLayout = (page: ReactElement) => {
   return (
     <Fragment>
-      <MainLayout>{page}</MainLayout>
+      <RootLayout>
+        <MainLayout>{page}</MainLayout>
+      </RootLayout>
     </Fragment>
   )
 }

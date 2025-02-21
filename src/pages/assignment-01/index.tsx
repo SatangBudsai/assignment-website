@@ -1,15 +1,16 @@
 import MainLayout from '@/layouts/main-layout'
-import { Button, Card, CardBody } from '@heroui/react'
+import { BreadcrumbItem, Breadcrumbs, Button, Card, CardBody } from '@heroui/react'
 import { Fragment, ReactElement, useState } from 'react'
 import dataAutoDeleteTodoList from '@/assets/assignment/data-auto-delete-todo-list.json'
 import DisplayWithType from './DisplayWithType'
+import RootLayout from '@/layouts/root-layout'
 
 export type itemType = {
   name: string
   type: string
 }
 
-const Home = () => {
+const Assignment1 = () => {
   const [mainList, setMainList] = useState<itemType[]>(dataAutoDeleteTodoList || [])
   const [fruit, setFruit] = useState<itemType[]>([])
   const [vegetable, setVegetable] = useState<itemType[]>([])
@@ -31,7 +32,12 @@ const Home = () => {
 
   return (
     <Fragment>
-      <h1 className='text-2xl font-bold'>แบบทดสอบ 01: Auto Delete Todo List</h1>
+      <Breadcrumbs>
+        <BreadcrumbItem>แบบทดสอบ Seven Hunter</BreadcrumbItem>
+        <BreadcrumbItem>แบบทดสอบที่ 1 : Auto Delete Todo List</BreadcrumbItem>
+      </Breadcrumbs>
+
+      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบที่ 1 : Auto Delete Todo List</h1>
       <Card className='mt-5 p-4'>
         <CardBody>
           <div className=' grid grid-cols-3 gap-5'>
@@ -71,13 +77,15 @@ const Home = () => {
   )
 }
 
-export default Home
-Home.auth = false
+export default Assignment1
+Assignment1.auth = false
 
-Home.getLayout = (page: ReactElement) => {
+Assignment1.getLayout = (page: ReactElement) => {
   return (
     <Fragment>
-      <MainLayout>{page}</MainLayout>
+      <RootLayout>
+        <MainLayout>{page}</MainLayout>
+      </RootLayout>
     </Fragment>
   )
 }

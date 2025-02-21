@@ -31,7 +31,9 @@ const DisplayItem = ({ item, items, setItems, mainList, setMainList }: Props) =>
   return (
     <Button variant='ghost' radius='md' size='lg' key={item.name} onPress={onMoveItem}>
       <p>{item.name} </p>
-      <Chip size='sm'>{seconds} วิ</Chip>
+      <Chip size='sm' variant='solid' color='warning'>
+        {seconds}s
+      </Chip>
     </Button>
   )
 }

@@ -25,6 +25,8 @@ import '@/configs/i18n'
 
 import '@/iconify-bundle/icons-bundle-react'
 
+import 'react-json-view-lite/dist/index.css'
+
 import { Prompt } from 'next/font/google'
 const prompt = Prompt({
   subsets: ['latin', 'latin-ext', 'thai'],

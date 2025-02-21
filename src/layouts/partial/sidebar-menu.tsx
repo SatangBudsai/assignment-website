@@ -77,7 +77,6 @@ const SidebarMenu = React.forwardRef<HTMLElement, SidebarProps>(
         const isNestType = item.items && item.items?.length > 0 && item?.type === SidebarItemType.Nest
 
         if (isNestType) {
-          // Is a nest type item , so we need to remove the href
           delete item.href
         }
 
@@ -173,6 +172,8 @@ const SidebarMenu = React.forwardRef<HTMLElement, SidebarProps>(
 
     const renderItem = React.useCallback(
       (item: SidebarItem) => {
+        const { href, ...restItemProps } = item
+
         const isNestType = item.items && item.items?.length > 0 && item?.type === SidebarItemType.Nest
 
         if (isNestType) {
@@ -181,8 +182,9 @@ const SidebarMenu = React.forwardRef<HTMLElement, SidebarProps>(
 
         return (
           <ListboxItem
-            {...item}
+            {...restItemProps}
             key={item.key}
+            onPress={() => href && router.push(href)}
             endContent={isCompact || hideEndContent ? null : item.endContent ?? null}
             startContent={
               isCompact ? null : item.icon ? (

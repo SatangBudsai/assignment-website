@@ -51,6 +51,8 @@
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.51.5",
     "react-i18next": "^15.0.2",
+    "react-json-view": "^1.21.3",
+    "react-json-view-lite": "^2.3.0",
     "react-key-handler": "^1.2.0-beta.3",
     "react-magnifier": "^3.0.4",
     "react-modern-drawer": "^1.2.2",

@@ -19,7 +19,7 @@ const useSectionItems = () => {
       },
       {
         key: 'assignment',
-        title: 'รายการแบบทดสอบ',
+        title: 'แบบทดสอบ Seven Hunter',
         items: [
           {
             key: 'assignment-01',
