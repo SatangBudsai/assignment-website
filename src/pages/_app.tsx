@@ -29,11 +29,15 @@ import 'react-json-view-lite/dist/index.css'
 
 import { Prompt } from 'next/font/google'
 const prompt = Prompt({
-  subsets: ['latin', 'latin-ext', 'thai'],
+  subsets: ['latin', 'latin-ext', 'thai'], // รองรับภาษาไทย
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   style: ['normal', 'italic'],
-  display: 'swap'
+  display: 'swap',
+  preload: true
 })
+
+import { ApolloProvider } from '@apollo/client'
+import pokemonClient from '@/graphql/pokemon-service/pokemon-client'
 
 export default function App({ Component, pageProps }: AppPropsWithLayoutType) {
   const getLayout = Component.getLayout || ((page: ReactElement) => page)
@@ -42,28 +46,31 @@ export default function App({ Component, pageProps }: AppPropsWithLayoutType) {
   useEffect(() => {
     initLightboxJS('4CE0-406C-E8EC-5F69', 'Individual')
   })
+  console.log(prompt.style.fontFamily)
 
   return (
     <Fragment>
       <ReactQueryProvider>
-        <ReduxProvider store={store}>
-          {/* <SocketProvider> */}
-          <NprogressProvider>
-            <NextUIProvider>
-              <DayjsProvider>
-                <AuthGuard isAuth={auth}>
-                  <style jsx global>{`
-                    * {
-                      font-family: ${prompt.style.fontFamily};
-                    }
-                  `}</style>
-                  <RootLayout>{getLayout(<Component {...pageProps} />)}</RootLayout>
-                </AuthGuard>
-              </DayjsProvider>
-            </NextUIProvider>
-          </NprogressProvider>
-          {/* </SocketProvider> */}
-        </ReduxProvider>
+        <ApolloProvider client={pokemonClient}>
+          <ReduxProvider store={store}>
+            {/* <SocketProvider> */}
+            <NprogressProvider>
+              <NextUIProvider>
+                <DayjsProvider>
+                  <AuthGuard isAuth={auth}>
+                    <style jsx global>{`
+                      * {
+                        font-family: ${prompt.style.fontFamily};
+                      }
+                    `}</style>
+                    <RootLayout>{getLayout(<Component {...pageProps} />)}</RootLayout>
+                  </AuthGuard>
+                </DayjsProvider>
+              </NextUIProvider>
+            </NprogressProvider>
+            {/* </SocketProvider> */}
+          </ReduxProvider>
+        </ApolloProvider>
       </ReactQueryProvider>
     </Fragment>
   )

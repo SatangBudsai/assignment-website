@@ -24,12 +24,14 @@ const useSectionItems = () => {
           {
             key: 'assignment-seven-hunter-01',
             href: '/assignment-seven-hunter/assignment-01',
-            title: '01: Auto delete todo list'
+            icon: 'pepicons-pencil:circle',
+            title: 'Auto delete todo list'
           },
           {
             key: 'assignment-seven-hunter-02',
             href: '/assignment-seven-hunter/assignment-02',
-            title: '02: Create data from API'
+            icon: 'pepicons-pencil:circle',
+            title: 'Create data from API'
           }
         ]
       },
@@ -40,7 +42,8 @@ const useSectionItems = () => {
           {
             key: 'assignment-future-makers-03',
             href: '/assignment-future-makers/assignment-03',
-            title: '03: Search Pokemon GraphQL'
+            icon: 'pepicons-pencil:circle',
+            title: 'Search Pokemon GraphQL'
           }
         ]
       }

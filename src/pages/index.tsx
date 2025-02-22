@@ -20,7 +20,7 @@ const Home = (props: Props) => {
     {
       header: 'แบบทดสอบ Future Makers',
       assignments: [
-        { title: 'แบบทดสอบ 1', name: 'Search Pokemon GraphQL', href: '/assignment-future-makers/assignment-01' }
+        { title: 'แบบทดสอบ 3', name: 'Search Pokemon GraphQL', href: '/assignment-future-makers/assignment-03' }
       ]
     }
   ]

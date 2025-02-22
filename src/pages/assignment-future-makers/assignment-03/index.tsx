@@ -1,11 +1,131 @@
 import MainLayout from '@/layouts/main-layout'
 import RootLayout from '@/layouts/root-layout'
-import React, { Fragment, ReactElement } from 'react'
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Avatar,
+  BreadcrumbItem,
+  Breadcrumbs,
+  Chip,
+  Select,
+  SelectItem,
+  Image,
+  Card,
+  CardBody
+} from '@heroui/react'
+import React, { Fragment, Key, ReactElement, useCallback, useEffect, useState } from 'react'
+import { useGetPokemonAllQuery, usePokemonQuery } from '@/graphql/generated'
+import { useRouter } from 'next/router'
+import { useDebounce } from 'use-debounce'
+import DisplayPokemon from './DisplayPokemon'
+import NotFoundPokemon from './NotFoundPokemon'
 
-type Props = {}
+const Assignment3 = () => {
+  const router = useRouter()
+  const [selectedKey, setSelectedKey] = useState<Key | null>(null)
+  const [value, setValue] = useState<string>('')
+  const [debouncedValue] = useDebounce(value, 1000)
+  const [debouncedLoading, setDebouncedLoading] = useState<boolean>(false)
 
-const Assignment3 = (props: Props) => {
-  return <div>index</div>
+  const pokemons = useGetPokemonAllQuery({
+    variables: { first: 1000 }
+  })
+
+  const pokemon = usePokemonQuery({
+    variables: { name: debouncedValue }
+  })
+
+  const onSelectionChange = (id: Key | null) => {
+    setSelectedKey(id)
+  }
+
+  const onInputChange = (newValue: string) => {
+    setDebouncedLoading(true)
+    setValue(newValue)
+  }
+
+  useEffect(() => {
+    if (debouncedValue) {
+      router.replace(
+        {
+          pathname: router.pathname,
+          query: { ...router.query, search: debouncedValue }
+        },
+        undefined,
+        { shallow: true }
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue])
+
+  useEffect(() => {
+    setValue((router.query.search as string) || '')
+    setDebouncedLoading(false)
+  }, [router.query.search])
+
+  if (pokemons.loading) {
+    return <></>
+  }
+
+  return (
+    <Fragment>
+      <Breadcrumbs>
+        <BreadcrumbItem>แบบทดสอบ Future Makers</BreadcrumbItem>
+        <BreadcrumbItem>แบบทดสอบที่ 3 : Search Pokemon GraphQL</BreadcrumbItem>
+      </Breadcrumbs>
+
+      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบที่ 1 : Search Pokemon GraphQL</h1>
+      <div className='mt-5'>
+        <Autocomplete
+          className='max-w-sm'
+          defaultItems={(pokemons.data?.pokemons || []).filter(item => item !== null)}
+          label='ค้นหารายชื่อโปเกมอน'
+          labelPlacement='inside'
+          placeholder='กรุณากรอกชื่อโปเกมอน'
+          variant='bordered'
+          allowsCustomValue
+          inputValue={value}
+          onInputChange={onInputChange}
+          onSelectionChange={onSelectionChange}>
+          {item => (
+            <AutocompleteItem
+              key={item?.id}
+              textValue={item?.name || ''}
+              startContent={
+                <Image
+                  src={item?.image || ''}
+                  alt={item?.name || ''}
+                  width={25}
+                  height={25}
+                  radius='sm'
+                  className='object-contain'
+                />
+              }>
+              {item?.name}
+            </AutocompleteItem>
+          )}
+        </Autocomplete>
+      </div>
+
+      <div className='mt-5'>
+        {!!debouncedValue ? (
+          pokemon.loading || debouncedLoading ? (
+            <div>loading...</div>
+          ) : !!pokemon.data?.pokemon ? (
+            <Card className='p-5'>
+              <CardBody>
+                <section className='mt-5'>
+                  <DisplayPokemon pokemon={pokemon.data?.pokemon} />
+                </section>
+              </CardBody>
+            </Card>
+          ) : (
+            <NotFoundPokemon />
+          )
+        ) : null}
+      </div>
+    </Fragment>
+  )
 }
 
 export default Assignment3

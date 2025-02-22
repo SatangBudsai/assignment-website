@@ -86,7 +86,7 @@ const Assignment2 = (props: Props) => {
         <BreadcrumbItem>แบบทดสอบที่ 2 : Auto Delete Todo List</BreadcrumbItem>
       </Breadcrumbs>
 
-      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบ 2 : Create Date from API</h1>
+      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบที่ 2 : Create Date from API</h1>
 
       <Card className='mt-5 p-4'>
         <CardBody>

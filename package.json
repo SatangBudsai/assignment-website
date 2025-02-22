@@ -11,7 +11,8 @@
     "lint": "next lint",
     "preprocess-generated": "node ./src/api/generated/configs/pre-processor.js",
     "postprocess-generated": "node ./src/api/generated/configs/post-processor.js",
-    "generate": "yarn preprocess-generated && swagger-typescript-api -p ./src/api/generated/configs/swagger-processed.json -o ./src/api/generated/main-service -n apiGenerated.ts --axios --unwrap-response-data && yarn postprocess-generated"
+    "generate": "yarn preprocess-generated && swagger-typescript-api -p ./src/api/generated/configs/swagger-processed.json -o ./src/api/generated/main-service -n apiGenerated.ts --axios --unwrap-response-data && yarn postprocess-generated",
+    "generate:graphql": "graphql-codegen --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.13.1",
@@ -19,6 +20,10 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@emotion/is-prop-valid": "^1.2.2",
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/typescript": "^4.1.4",
+    "@graphql-codegen/typescript-operations": "^4.5.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@heroui/react": "2.6.14",
     "@iconify/react": "^4.1.1",
     "@reduxjs/toolkit": "^2.0.1",
