@@ -117,7 +117,7 @@ export type PokemonQueryVariables = Exact<{
 }>;
 
 
-export type PokemonQuery = { __typename?: 'Query', pokemon?: { __typename?: 'Pokemon', id: string, number?: string | null, name?: string | null, classification?: string | null, types?: Array<string | null> | null, resistant?: Array<string | null> | null, weaknesses?: Array<string | null> | null, image?: string | null, evolutions?: Array<{ __typename?: 'Pokemon', name?: string | null, image?: string | null } | null> | null, attacks?: { __typename?: 'PokemonAttack', fast?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null, special?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null } | null } | null };
+export type PokemonQuery = { __typename?: 'Query', pokemon?: { __typename?: 'Pokemon', id: string, number?: string | null, name?: string | null, types?: Array<string | null> | null, resistant?: Array<string | null> | null, weaknesses?: Array<string | null> | null, image?: string | null, evolutions?: Array<{ __typename?: 'Pokemon', id: string, name?: string | null, image?: string | null } | null> | null, attacks?: { __typename?: 'PokemonAttack', fast?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null, special?: Array<{ __typename?: 'Attack', name?: string | null, type?: string | null, damage?: number | null } | null> | null } | null } | null };
 
 export type GetPokemonAllQueryVariables = Exact<{
   first: Scalars['Int']['input'];
@@ -133,12 +133,12 @@ export const PokemonDocument = gql`
     id
     number
     name
-    classification
     types
     resistant
     weaknesses
     image
     evolutions {
+      id
       name
       image
     }

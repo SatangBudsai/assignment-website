@@ -1,24 +1,15 @@
 import { PokemonQuery } from '@/graphql/generated'
 import React, { Fragment } from 'react'
-import {
-  Autocomplete,
-  AutocompleteItem,
-  Avatar,
-  BreadcrumbItem,
-  Breadcrumbs,
-  Chip,
-  Select,
-  SelectItem,
-  Image,
-  Divider,
-  Spacer
-} from '@heroui/react'
+import { Chip, Image, Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/react'
+import Icon from '@/components/icon'
+import { useRouter } from 'next/router'
 
 type Props = {
   pokemon?: PokemonQuery['pokemon'] | undefined | null
 }
 
 const DisplayPokemon = ({ pokemon }: Props) => {
+  const router = useRouter()
   const colorPokemonType: { [key: string]: string } = {
     fighting: '#C03028',
     psychic: '#F85888',
@@ -40,20 +31,30 @@ const DisplayPokemon = ({ pokemon }: Props) => {
     steel: '#8F9493'
   }
 
+  const handleClickEvo = (name?: string | null) => {
+    router.replace(
+      {
+        pathname: router.pathname,
+        query: { ...router.query, search: name }
+      },
+      undefined,
+      { shallow: true }
+    )
+  }
+
   return (
     <Fragment>
-      <div className='flex gap-5'>
+      <section className='flex gap-5'>
         <Image
           src={pokemon?.image || ''}
           alt={`image pokemon ${pokemon?.name}` || ''}
-          width={170}
-          height={170}
-          radius='lg'
-          className='object-contain p-1'
+          width={175}
+          height={175}
+          className='object-contain'
         />
-        <section className='flex flex-col'>
+        <div className='flex flex-col'>
           <p className='text-sm font-semibold'>No: {pokemon?.number}</p>
-          <section className='flex items-center gap-1'>
+          <div className='flex items-center gap-1'>
             <p className='text-xl font-semibold'>{pokemon?.name}</p>
             {pokemon?.types?.map((type, index) => (
               <Chip
@@ -64,10 +65,10 @@ const DisplayPokemon = ({ pokemon }: Props) => {
                 {type}
               </Chip>
             ))}
-          </section>
+          </div>
 
           <p className='mt-2 text-medium font-semibold'>Resistant</p>
-          <section className='flex items-center gap-2'>
+          <div className='flex items-center gap-2'>
             {pokemon?.resistant?.map((type, index) => (
               <Chip
                 key={index}
@@ -77,10 +78,10 @@ const DisplayPokemon = ({ pokemon }: Props) => {
                 {type}
               </Chip>
             ))}
-          </section>
+          </div>
 
           <p className='mt-2 text-medium font-semibold'>Weaknesses</p>
-          <section className='flex items-center gap-2'>
+          <div className='flex items-center gap-2'>
             {pokemon?.weaknesses?.map((type, index) => (
               <Chip
                 key={index}
@@ -90,50 +91,89 @@ const DisplayPokemon = ({ pokemon }: Props) => {
                 {type}
               </Chip>
             ))}
-          </section>
-        </section>
-      </div>
-      <div className='mt-5 flex gap-5'>
-        <section className='flex flex-1 flex-col overflow-hidden rounded-lg border'>
-          <p className='bg-default-100 px-6 py-2 text-lg font-bold text-default-700'>Fast Skill</p>
-          <div className='flex flex-col gap-1 px-6 py-2'>
-            {pokemon?.attacks?.fast?.map((skill, index) => (
-              <div key={index} className='grid grid-cols-3 gap-2'>
-                {skill?.name}
-                <Chip
-                  key={index}
-                  radius='sm'
-                  className='text-white'
-                  style={{ backgroundColor: skill?.type ? colorPokemonType[skill?.type.toLowerCase()] : '#fff' }}>
-                  {skill?.type}
-                </Chip>
-                {skill?.damage || '-'}
-              </div>
-            ))}
           </div>
-        </section>
-        <section className='flex flex-1 flex-col overflow-hidden rounded-lg border'>
-          <p className='bg-default-100 px-6 py-2 text-lg font-bold text-default-700'>Special Skill</p>
-          <div className='flex flex-col gap-1 px-6 py-2'>
-            {pokemon?.attacks?.special?.map((skill, index) => (
-              <div key={index} className='grid grid-cols-3 gap-2'>
-                {skill?.name}
-                <Chip
-                  key={index}
-                  radius='sm'
-                  className='w-ful text-white'
-                  style={{ backgroundColor: skill?.type ? colorPokemonType[skill?.type.toLowerCase()] : '#fff' }}>
-                  {skill?.type}
-                </Chip>
-                {skill?.damage}
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <section className='mt-5'>
-        <p className='text-lg font-semibold'>Evolution</p>
+      <p className='mt-5 font-semibold'>Move Skill</p>
+      <section className='mt-2 flex gap-5'>
+        <Table aria-label='Fast move pokemon table' removeWrapper>
+          <TableHeader>
+            <TableColumn>Fast move</TableColumn>
+            <TableColumn>Type</TableColumn>
+            <TableColumn>Damage</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {(pokemon?.attacks?.fast || [])?.map((skill, index) => (
+              <TableRow key={index}>
+                <TableCell>{skill?.name}</TableCell>
+                <TableCell>
+                  <Chip
+                    key={index}
+                    radius='sm'
+                    className='text-white'
+                    style={{ backgroundColor: skill?.type ? colorPokemonType[skill?.type.toLowerCase()] : '#fff' }}>
+                    {skill?.type}
+                  </Chip>
+                </TableCell>
+                <TableCell> {skill?.damage || '-'}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <Table aria-label='Special move pokemon table' removeWrapper>
+          <TableHeader>
+            <TableColumn>Special move</TableColumn>
+            <TableColumn>Type</TableColumn>
+            <TableColumn>Damage</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {(pokemon?.attacks?.special || [])?.map((skill, index) => (
+              <TableRow key={index}>
+                <TableCell>{skill?.name}</TableCell>
+                <TableCell>
+                  <Chip
+                    key={index}
+                    radius='sm'
+                    className='text-white'
+                    style={{ backgroundColor: skill?.type ? colorPokemonType[skill?.type.toLowerCase()] : '#fff' }}>
+                    {skill?.type}
+                  </Chip>
+                </TableCell>
+                <TableCell> {skill?.damage || '-'}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </section>
+
+      <p className='text-lg font-semibold'>Evolution</p>
+      <section className='mt-5 flex'>
+        {(pokemon?.evolutions || []).length > 0 ? (
+          <>
+            {(pokemon?.evolutions || []).map((item, index) => (
+              <div key={index} className='flex items-center justify-center'>
+                <div
+                  className='flex cursor-pointer flex-col items-center justify-center'
+                  onClick={() => handleClickEvo(item?.name)}>
+                  <Image
+                    src={item?.image || ''}
+                    alt={`image pokemon ${item?.name}` || ''}
+                    width={120}
+                    height={120}
+                    className='object-contain'
+                  />
+                  {item?.name}
+                </div>
+                {index + 1 !== (pokemon?.evolutions || []).length && (
+                  <Icon icon='solar:alt-arrow-right-line-duotone' width='24' height='24' className='mx-6' />
+                )}
+              </div>
+            ))}
+          </>
+        ) : (
+          'ไม่มีร่างวิวัฒนาการ'
+        )}
       </section>
     </Fragment>
   )

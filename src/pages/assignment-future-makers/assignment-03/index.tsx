@@ -3,15 +3,12 @@ import RootLayout from '@/layouts/root-layout'
 import {
   Autocomplete,
   AutocompleteItem,
-  Avatar,
   BreadcrumbItem,
   Breadcrumbs,
-  Chip,
-  Select,
-  SelectItem,
   Image,
   Card,
-  CardBody
+  CardBody,
+  Skeleton
 } from '@heroui/react'
 import React, { Fragment, Key, ReactElement, useCallback, useEffect, useState } from 'react'
 import { useGetPokemonAllQuery, usePokemonQuery } from '@/graphql/generated'
@@ -43,6 +40,7 @@ const Assignment3 = () => {
     setDebouncedLoading(true)
     setValue(newValue)
   }
+  console.log('zxccc', debouncedLoading)
 
   useEffect(() => {
     if (debouncedValue) {
@@ -55,6 +53,8 @@ const Assignment3 = () => {
         { shallow: true }
       )
     }
+    setDebouncedLoading(false)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedValue])
 
@@ -71,19 +71,22 @@ const Assignment3 = () => {
     <Fragment>
       <Breadcrumbs>
         <BreadcrumbItem>แบบทดสอบ Future Makers</BreadcrumbItem>
-        <BreadcrumbItem>แบบทดสอบที่ 3 : Search Pokemon GraphQL</BreadcrumbItem>
+        <BreadcrumbItem>แบบทดสอบ : Search Pokemon GraphQL</BreadcrumbItem>
       </Breadcrumbs>
 
-      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบที่ 1 : Search Pokemon GraphQL</h1>
+      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบ : Search Pokemon GraphQL</h1>
       <div className='mt-5'>
         <Autocomplete
           className='max-w-sm'
-          defaultItems={(pokemons.data?.pokemons || []).filter(item => item !== null)}
+          defaultItems={(pokemons.data?.pokemons || []).flatMap(item => (item ? [item] : []))}
           label='ค้นหารายชื่อโปเกมอน'
           labelPlacement='inside'
           placeholder='กรุณากรอกชื่อโปเกมอน'
           variant='bordered'
           allowsCustomValue
+          scrollShadowProps={{
+            isEnabled: false
+          }}
           inputValue={value}
           onInputChange={onInputChange}
           onSelectionChange={onSelectionChange}>
@@ -108,9 +111,9 @@ const Assignment3 = () => {
       </div>
 
       <div className='mt-5'>
-        {!!debouncedValue ? (
+        {!!debouncedValue || debouncedLoading ? (
           pokemon.loading || debouncedLoading ? (
-            <div>loading...</div>
+            <Skeleton className='h-[35rem] w-full rounded-2xl' />
           ) : !!pokemon.data?.pokemon ? (
             <Card className='p-5'>
               <CardBody>
@@ -122,7 +125,9 @@ const Assignment3 = () => {
           ) : (
             <NotFoundPokemon />
           )
-        ) : null}
+        ) : (
+          <NotFoundPokemon />
+        )}
       </div>
     </Fragment>
   )

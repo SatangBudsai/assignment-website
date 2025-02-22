@@ -8,6 +8,7 @@ query pokemon($id: String, $name: String) {
     weaknesses
     image
     evolutions {
+      id
       name
       image
     }

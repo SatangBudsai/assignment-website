@@ -34,10 +34,10 @@ const Assignment1 = () => {
     <Fragment>
       <Breadcrumbs>
         <BreadcrumbItem>แบบทดสอบ Seven Hunter</BreadcrumbItem>
-        <BreadcrumbItem>แบบทดสอบที่ 1 : Auto Delete Todo List</BreadcrumbItem>
+        <BreadcrumbItem>แบบทดสอบ : Auto Delete Todo List</BreadcrumbItem>
       </Breadcrumbs>
 
-      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบที่ 1 : Auto Delete Todo List</h1>
+      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบ : Auto Delete Todo List</h1>
       <Card className='mt-5 p-4'>
         <CardBody>
           <div className=' grid grid-cols-3 gap-5'>
