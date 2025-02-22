@@ -9,44 +9,54 @@ type Props = {}
 const Home = (props: Props) => {
   const router = useRouter()
 
+  const assignmentList = [
+    {
+      header: 'แบบทดสอบ Seven Hunter',
+      assignments: [
+        { title: 'แบบทดสอบ 1', name: 'Auto delete todo list', href: '/assignment-seven-hunter/assignment-01' },
+        { title: 'แบบทดสอบ 2', name: 'Create data from API', href: '/assignment-seven-hunter/assignment-02' }
+      ]
+    },
+    {
+      header: 'แบบทดสอบ Future Makers',
+      assignments: [
+        { title: 'แบบทดสอบ 3', name: 'Search Pokemon GraphQL', href: '/assignment-future-makers/assignment-03' }
+      ]
+    }
+  ]
+
   return (
     <Fragment>
       <Breadcrumbs>
         <BreadcrumbItem>หน้าหลัก</BreadcrumbItem>
       </Breadcrumbs>
 
-      <h1 className='mt-5 text-2xl font-bold text-default-600'>แบบทดสอบ Seven Hunter</h1>
-
-      <Card className='mt-5 p-2'>
-        <CardBody>
-          <div className='flex gap-5'>
-            <Button
-              variant='ghost'
-              color='default'
-              className='min-h-36 px-10'
-              onPress={() => {
-                router.push('/assignment-01')
-              }}>
-              <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold'>แบบทดสอบ 1</p>
-                <p className='text-xl'>Auto delete todo list</p>
+      {assignmentList.map((item, index) => (
+        <Fragment key={index}>
+          <h1 className='mt-5 text-2xl font-bold text-default-600'>{item.header}</h1>
+          <Card className='mt-5 p-2'>
+            <CardBody>
+              <div className='flex gap-5'>
+                {item.assignments.map((ass, indexAss) => (
+                  <Button
+                    key={indexAss}
+                    variant='ghost'
+                    color='default'
+                    className='min-h-36 px-10'
+                    onPress={() => {
+                      router.push(`${ass.href}`)
+                    }}>
+                    <div className='flex flex-col items-center'>
+                      <p className='text-xl font-semibold'>{ass.title}</p>
+                      <p className='text-xl'>{ass.name}</p>
+                    </div>
+                  </Button>
+                ))}
               </div>
-            </Button>
-            <Button
-              variant='ghost'
-              color='default'
-              className='min-h-36 px-10'
-              onPress={() => {
-                router.push('/assignment-02')
-              }}>
-              <div className='flex flex-col items-center'>
-                <p className='text-xl font-semibold'>แบบทดสอบ 2</p>
-                <p className='text-xl'>ACreate data from API</p>
-              </div>
-            </Button>
-          </div>
-        </CardBody>
-      </Card>
+            </CardBody>
+          </Card>
+        </Fragment>
+      ))}
     </Fragment>
   )
 }

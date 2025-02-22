@@ -6,5 +6,6 @@ namespace NodeJS {
     NEXT_PUBLIC_ACCEPT: string
     NEXT_PUBLIC_LIGHTBOX_PLAN_TYPE: string
     NEXT_PUBLIC_LIGHTBOX_LICENSE_KEY: string
+    NEXT_PUBLIC_POKEMON_GRAPHQL_API: string
   }
 }

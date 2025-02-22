@@ -2,7 +2,7 @@ module.exports = {
   colors: {
     background: '#F9FAFE',
     foreground: '#333333',
-    content1: '#F9FAFE',
+    content1: '#FFF',
     content2: '#f4f4f5',
     content3: '#e4e4e7',
     content4: '#d4d4d8',

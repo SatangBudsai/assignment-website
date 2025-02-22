@@ -18,18 +18,32 @@ const useSectionItems = () => {
         ]
       },
       {
-        key: 'assignment',
-        title: 'แบบทดสอบ Seven Hunter',
+        key: 'assignment-seven-hunter',
+        title: 'แบบทดสอบ seven hunter',
         items: [
           {
-            key: 'assignment-01',
-            href: '/assignment-01',
-            title: '01: Auto delete todo list'
+            key: 'assignment-seven-hunter-01',
+            href: '/assignment-seven-hunter/assignment-01',
+            icon: 'pepicons-pencil:circle',
+            title: 'Auto delete todo list'
           },
           {
-            key: 'assignment-02',
-            href: '/assignment-02',
-            title: '02: Create data from API'
+            key: 'assignment-seven-hunter-02',
+            href: '/assignment-seven-hunter/assignment-02',
+            icon: 'pepicons-pencil:circle',
+            title: 'Create data from API'
+          }
+        ]
+      },
+      {
+        key: 'assignment-future-makers',
+        title: 'แบบทดสอบ Future Makers',
+        items: [
+          {
+            key: 'assignment-future-makers-03',
+            href: '/assignment-future-makers/assignment-03',
+            icon: 'pepicons-pencil:circle',
+            title: 'Search Pokemon GraphQL'
           }
         ]
       }
