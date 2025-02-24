@@ -32,8 +32,8 @@ const Assignment2 = (props: Props) => {
         result[department] = {
           male: 0,
           female: 0,
-          maxAge: 0,
-          minAge: 0,
+          maxAge: user.age,
+          minAge: user.age,
           ageRange: '',
           hair: {},
           addressUser: {}
